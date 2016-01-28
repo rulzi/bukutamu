@@ -1,0 +1,77 @@
+{% extends "AfandiMainBundle::layout.html.twig" %}
+
+{% block title %}Admin Homepage - Buku Tamu{% endblock %}
+
+{% block content %}
+
+<!-- Page Content -->
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header"> Buku Tamu</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
+            <div class="col-lg-12">
+            	{% if form is empty %}
+                    <div class="alert alert-danger" role="alert">
+                        Id Buku Tamu tidak ada
+                    </div>
+                {% else %}
+                {% for flash_message in app.session.flashbag.get('notice') %}
+                    <div class="alert alert-success" role="alert">
+                        {{ flash_message }}
+                    </div>
+                {% endfor %}
+                <div class="panel panel-default">
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="col-lg-6">
+                            {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+                                {% block form_errors %}
+								    {% spaceless %}
+								        {% if errors|length > 0 %}
+								        <div class="alert alert-danger" role="alert">
+                                        <ul>
+								            {% for error in errors %}
+								                <li>{{ error.message }}</li>
+								            {% endfor %}
+								        </ul>
+                                        </div>
+								        {% endif %}
+								    {% endspaceless %}
+								{% endblock form_errors %}
+                                <div class="form-group">
+                                    {{ form_label(form.nama) }}
+                                    {{ form_widget(form.nama, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_label(form.pesan) }}
+                                    {{ form_widget(form.pesan, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_label(form.imageFile) }}
+                                    {{ form_widget(form.imageFile, {'attr': {'class': ''}}) }}
+                                </div>
+                                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+                                {{ form_widget(form.reset, {'attr': {'class': 'btn btn-default'}}) }}
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+                {% endif %}
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
+
+{% endblock %}

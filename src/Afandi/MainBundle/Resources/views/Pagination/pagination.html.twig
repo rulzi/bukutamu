@@ -1,0 +1,49 @@
+{% if pageCount > 1 %}
+<nav>
+    <ul class="pagination">
+    
+        {% if first is defined and current != first %}
+        <li>
+            <a href="{{ path(route, query|merge({(pageParameterName): first})) }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% endif %}
+
+        {% if previous is defined %}
+        <li>
+            <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}" aria-label="Previous">
+                <span aria-hidden="true">Previous</span>
+            </a>
+        </li>
+        {% endif %}
+        
+        {% for page in pagesInRange %}
+            {% if page != current %}
+                <li>
+                    <a href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+                </li>
+            {% else %}
+                <li class="active"><a href="#">{{ page }}</a></li>
+            {% endif %}
+
+        {% endfor %}
+        
+        {% if next is defined %}
+            <li>
+                <a href="{{ path(route, query|merge({(pageParameterName): next})) }}" aria-label="Next">
+                    <span aria-hidden="true">Next</span>
+                </a>
+            </li>
+        {% endif %}
+
+        {% if last is defined and current != last %}
+            <li>
+                <a href="{{ path(route, query|merge({(pageParameterName): last})) }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}

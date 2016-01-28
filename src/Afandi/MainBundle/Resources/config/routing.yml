@@ -1,0 +1,34 @@
+homepage:
+    path:     /
+    defaults: { _controller: AfandiMainBundle:Homepage:index }
+
+fos_user_security_login:
+    path:     /login
+    defaults: { _controller: AfandiSiswaBundle:Security:login }
+    methods:  [GET, POST]
+
+fos_user_security_check:
+    path:     /login_check
+    defaults: { _controller: AfandiSiswaBundle:Security:check }
+    methods:  [POST]
+
+fos_user_security_logout:
+    path:     /logout
+    defaults: { _controller: AfandiSiswaBundle:Security:login }
+    methods:  [GET]
+
+bukutamu_index:
+    path:     /bukutamu
+    defaults: { _controller: AfandiMainBundle:BukuTamu:index }
+
+bukutamu_add:
+    path:     /bukutamu/add
+    defaults: { _controller: AfandiMainBundle:BukuTamu:add }
+
+bukutamu_edit:
+    path:     /bukutamu/edit/{id}
+    defaults: { _controller: AfandiMainBundle:BukuTamu:edit }
+
+bukutamu_delete:
+    path:     /bukutamu/delete{id}
+    defaults: { _controller: AfandiMainBundle:BukuTamu:delete }

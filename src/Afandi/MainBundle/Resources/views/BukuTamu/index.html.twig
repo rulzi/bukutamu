@@ -1,0 +1,106 @@
+{% extends "AfandiMainBundle::layout.html.twig" %}
+
+{% block title %}Admin Homepage - Buku Tamu{% endblock %}
+
+{% block content %}
+
+<!-- Page Content -->
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Buku Tamu</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
+            <div class="col-lg-12">
+                {% for flash_message in app.session.flashbag.get('notice_nulldata') %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ flash_message }}
+                    </div>
+                {% endfor %}
+                {% for flash_message in app.session.flashbag.get('notice') %}
+                    <div class="alert alert-success" role="alert">
+                        {{ flash_message }}
+                    </div>
+                {% endfor %}
+                <div class="panel panel-default">
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                    <a href="{{ path('bukutamu_add') }}"><button type="button" class="btn btn-primary">Add Buku Tamu</button></a>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama</th>
+                                        <th>Pesan</th>
+                                        <th>file</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% set no = 1 %}
+                                    {% for row in bukutamu %}
+                                        <tr>
+                                            <td>{{ no }}</td>
+                                            <td>{{ row.nama }}</td>
+                                            <td>{{ row.pesan }}</td>
+                                            <td>
+                                                {% if row.file is not null %}
+                                                <img src="{{ asset(['images/', row.file] | join) }}" class="img-thumbnail" width="304" height="236">
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <a href="{{ path('bukutamu_edit', {'id': row.id }) }}" class="btn-xs btn-warning">Edit</a>
+                                                <a href="#" class="btn-xs btn-danger" data-toggle="modal" data-target="#myModal">Hapus</a>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                <h4 class="modal-title" id="myModalLabel">Notification</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Are You Sure ?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                <a href="{{ path('bukutamu_delete', {'id': row.id }) }}" class="btn btn-danger">Yes</a>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.modal-content -->
+                                                    </div>
+                                                    <!-- /.modal-dialog -->
+                                                </div>
+                                                <!-- /.modal -->
+                                            </td>
+                                        </tr>
+                                        {% set no = no + 1 %}
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="3">No Buku Tamu have been found.</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                        {{ knp_pagination_render(bukutamu, 'AfandiMainBundle:Pagination:pagination.html.twig') }}
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
+
+{% endblock %}
